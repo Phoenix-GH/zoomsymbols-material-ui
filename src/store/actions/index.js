@@ -1,0 +1,22 @@
+//  Login Watcher Actions
+export const LOG_IN_WATCHER = 'LOG_IN_WATCHER';
+export const LOG_OUT_WATCHER = 'LOG_OUT_WATCHER';
+
+export const GET_USER_PROFILE_WATCHER = 'GET_USER_PROFILE_WATCHER';
+export const FILL_USER_PROFILE = 'FILL_USER_PROFILE';
+
+export const GET_MARKETS_WATCHER = 'GET_MARKETS_WATCHER';
+export const FILL_MARKETS = 'FILL_MARKETS';
+
+export const GET_MARKET_ROWS_WATCHER = 'GET_MARKET_ROWS_WATCHER';
+export const FILL_MARKET_ROWS = 'FILL_MARKET_ROWS';
+
+export const MARKETS_ERROR = 'MARKETS_ERROR';
+
+export const GET_MENU_WATCHER = 'GET_MENU_WATCHER';
+export const FILL_MENU = 'FILL_MENU';
+
+export const MENU_ERROR = 'MENU_ERROR';
+
+export const AUTH_ERROR = 'AUTH_ERROR';
+export const CLEAR_SESSION = 'CLEAR_SESSION';

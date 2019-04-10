@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  height: 100vh;
+}
+
+#root {
+  height: 100%;
+}
+
+#nav-link {
+  display: flex;
+  text-decoration: none;
+}
