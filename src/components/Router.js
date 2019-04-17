@@ -7,7 +7,7 @@ import Markets from 'containers/Markets';
 function Router() {
   return (
     <Switch>
-      <PrivateRoute exact path="/markets" component={Markets} />
+      <PrivateRoute exact path={"/Markets"} component={Markets} />
     </Switch>
   )
 }

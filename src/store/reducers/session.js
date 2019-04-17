@@ -2,7 +2,6 @@ import * as actions from '../actions';
 
 const initialState = {
   user: null,
-  members: [],
   error: null
 };
 

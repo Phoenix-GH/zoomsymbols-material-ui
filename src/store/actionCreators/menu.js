@@ -1,8 +1,8 @@
 import * as actions from '../actions';
 
 // Worker triggering actionCreators
-export function getMenuWatcher(params) {
-  return { type: actions.GET_MENU_WATCHER, payload: params };
+export function getMenuWatcher(payload, resolve, reject) {
+  return { type: actions.GET_MENU_WATCHER, payload, resolve, reject };
 }
 
 // Redux state changing actionCreators

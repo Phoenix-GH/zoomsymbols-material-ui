@@ -5,6 +5,7 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import FeatherIcon from 'feather-icons-react';
 import { Link } from 'react-router-dom';
 const styles = theme => ({
   root: {
@@ -45,9 +46,12 @@ class DrawerItem extends React.Component {
           <List component="div" disablePadding>
           {
             items && items.map(item => (
-              <ListItem button key={item.route}>
-                <Link to={`/${item.route}`} className={classes.nested} id="nav-link">
-                  <ListItemText>{item.title} </ListItemText>
+              <ListItem button key={item.code}>
+                <ListItemIcon>
+                  <FeatherIcon icon={item.icon} />
+                </ListItemIcon>
+                <Link to={`/${item.navigation}`} className={classes.nested} id="nav-link">
+                  <ListItemText>{item.name} </ListItemText>
                 </Link>
               </ListItem>
             ))

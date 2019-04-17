@@ -1,28 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
-
-const styles = theme => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-
-  selectEmpty: {
-    marginTop: theme.spacing.unit * 2,
-  },
-});
+import { Select, MenuItem, FormControl } from '@material-ui/core';
 
 function GroupDropdown(props) {
   const { onSelect, selectedGroup, items } = props;
   
   return (
     <FormControl>
-      <InputLabel shrink htmlFor="age-label-placeholder">
-        Group
-      </InputLabel>
-
       <Select
         value={selectedGroup}
         onChange={onSelect}

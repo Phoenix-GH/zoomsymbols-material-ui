@@ -28,7 +28,6 @@ class PrivateRoute extends Component {
 
   render() {
     let { isLoggedIn } = this.state;
-
     return isLoggedIn ? <Route {...this.props} /> : null;
   }
 }

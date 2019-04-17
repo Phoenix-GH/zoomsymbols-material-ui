@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
-import { AppBar, Divider, IconButton, Drawer, Typography, Toolbar, InputBase, Badge, Menu, MenuItem } from '@material-ui/core';
-import { ChevronRight, AccountCircle } from '@material-ui/icons';
+
+import { AppBar, IconButton, Typography, Toolbar, InputBase, Badge, Menu, MenuItem } from '@material-ui/core';
+import {  AccountCircle } from '@material-ui/icons';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
@@ -16,9 +15,8 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 
 import Router from 'components/Router';
+import NavigationDrawer from './NavigationDrawer';
 import { fade } from '@material-ui/core/styles/colorManipulator';
-import DrawerItem from './navigation/DrawerItem';
-import { getMenuWatcher } from '../store/actionCreators/menu';
 
 const drawerWidth = 240;
 
@@ -66,10 +64,6 @@ const styles = theme => ({
   hide: {
     display: 'none',
   },
-  drawerPaper: {
-    position: 'relative',
-    width: drawerWidth,
-  },
   drawerHeader: {
     display: 'flex',
     alignItems: 'center',
@@ -80,6 +74,7 @@ const styles = theme => ({
   content: {
     width: '100%',
     flexGrow: 1,
+    overflow: 'scroll',
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
     transition: theme.transitions.create('margin', {
@@ -166,14 +161,6 @@ class NavBar extends Component {
     mobileMoreAnchorEl: null,
   }
   
-  componentDidMount() {
-    new Promise((resolve, reject) => {
-      this.props.getMenuWatcher();
-    }).catch(e => {
-      console.log(e);
-    });
-  }
-
   handleDrawerOpen = () => {
     this.setState({ open: true });
   }
@@ -199,9 +186,12 @@ class NavBar extends Component {
     this.setState({ mobileMoreAnchorEl: null });
   };
 
+  handleLogout = () => {
+    this.props.logout();
+  }
+
   render() {
-    const { classes, menu } = this.props;
-    console.log('menu----', this.props.menu);
+    const { classes } = this.props;
     const { anchor, open, anchorEl, mobileMoreAnchorEl } = this.state;
 
     const isMenuOpen = Boolean(anchorEl);
@@ -217,6 +207,7 @@ class NavBar extends Component {
       >
         <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
         <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
+        <MenuItem onClick={this.handleLogout}>Log out</MenuItem>
       </Menu>
     );
 
@@ -250,40 +241,15 @@ class NavBar extends Component {
           </IconButton>
           <p>Profile</p>
         </MenuItem>
+        <MenuItem onClick={this.handleLogout}>
+          <IconButton color="inherit">
+            <AccountCircle />
+          </IconButton>
+          <p>Logout</p>
+        </MenuItem>
       </Menu>
     );
     
-    const marketsMenuItems = [
-      {
-        title: 'Markets',
-        route: 'markets', 
-      },
-      {
-        title: 'Today',
-        route: 'today', 
-      },
-      {
-        title: 'Exchanges',
-        route: 'exchanges', 
-      },
-      {
-        title: 'Securities',
-        route: 'securities', 
-      },
-      {
-        title: 'Movers',
-        route: 'movers', 
-      },
-      {
-        title: 'KeyList',
-        route: 'keylist', 
-      },
-      {
-        title: 'Find',
-        route: 'find', 
-      },
-    ];
-
     return (
       <div className={classes.root}>
         <div className={classes.appFrame}>
@@ -345,27 +311,10 @@ class NavBar extends Component {
           </AppBar>
           {renderMenu}
           {renderMobileMenu}
-          <Drawer
-            variant="persistent"
-            anchor="left"
+          <NavigationDrawer
             open={open}
-            classes={{
-              paper: classes.drawerPaper
-            }}
-          >
-            <div className={classes.drawerHeader}>
-              <IconButton onClick={this.handleDrawerClose}>
-                <ChevronRight />
-              </IconButton>
-            </div>
-            <DrawerItem
-              title='Markets'
-              items={marketsMenuItems}
-              icon={<SearchIcon />}
-            />
-            <Divider />
-           
-          </Drawer>
+            handleDrawerClose={this.handleDrawerClose}
+          />
           <main
             className={classNames(classes.content, classes[`content-${anchor}`], {
               [classes.contentShift]: open,
@@ -384,12 +333,9 @@ class NavBar extends Component {
 NavBar.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
+  logout: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ menu }) => ({
-  menu,
-});
-
-const mapDispatchToProps = dispatch => bindActionCreators({ getMenuWatcher }, dispatch);
 export default withStyles(styles, { withTheme: true })(NavBar);
+
 

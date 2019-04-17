@@ -30,15 +30,15 @@ export function* loginActionEffect(loginAction) {
 
   try {
     let { data } = yield call(loginApi, payload);
-    Object.keys(data.access_token).forEach(key => {
-      localStorage.setItem(key, data.access_token[key]);
-    });
-    yield put(fillUserProfile(data.access_token));
-    
-    yield put(push('/'));
+    if(data.access_token) {
+      Object.keys(data.access_token).forEach(key => {
+        localStorage.setItem(key, data.access_token[key]);
+      });
+      yield put(fillUserProfile(data.access_token));
+      yield put(push('/'));
+    }
     if (resolve) resolve();
   } catch (e) {
-  
     yield put(authError(e));
     if (reject) reject(e);
   }
@@ -47,6 +47,7 @@ export function* loginActionEffect(loginAction) {
 export function* loginActionWatcher() {
   yield takeLatest(actions.LOG_IN_WATCHER, loginActionEffect);
 }
+
 
 /**
  * Logout Operation using saga
